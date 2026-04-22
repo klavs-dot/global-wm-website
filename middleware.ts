@@ -6,6 +6,11 @@ const defaultLocale = 'lv';
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
+  // Skip dashboard — handled by rewrite
+  if (pathname.startsWith('/dash')) {
+    return NextResponse.next();
+  }
+
   // Check if pathname already starts with a locale
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
